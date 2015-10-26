@@ -1,0 +1,26 @@
+<div class="col-md-10 col-md-offset-1">
+  <br>
+  <div>
+    <button class="btn btn-primary" ng-click="InstagramLogin()" >Connect with Instagram</button>
+    &nbsp;
+    <button class="btn btn-primary" ng-click="InstagramPhotos()" ng-disabled="!loginStatus.connected">Get Instagram Photos</button>
+  </div>
+  <br>
+  <!-- SHOW INSTAGRAM PHOTOS -->
+  <div class="row">
+    <div class="col-md-6 pull-left">
+      <div ng-repeat="pic in pics | limitTo:5" class="well well-lg">
+        <div ng-repeat="(key, value) in pic">
+          <p> {{key}}: {{ value }} </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 pull-right">
+      <div ng-repeat="user in followed | limitTo:5" class="well well-lg">
+        <div ng-repeat="(key, value) in user">
+          <p> {{key}}: {{ value }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

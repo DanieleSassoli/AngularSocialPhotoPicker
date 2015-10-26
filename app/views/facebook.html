@@ -1,0 +1,41 @@
+<div class="col-md-10 col-md-offset-1">
+  <br>
+  <div>
+    <button class="btn btn-primary" ng-click="FacebookLogin()" ng-disabled="loginStatus.connected">Connect with
+      Facebook
+    </button>
+    &nbsp;
+    <button class="btn btn-danger" ng-click="FacebookLogout()"
+            ng-disabled="!loginStatus.connected">
+      Logout
+    </button>
+    &nbsp;
+    <button class="btn btn-primary" ng-click="FacebookUploadedPhotos()"
+            ng-disabled="!loginStatus.connected">Get Uploaded Photos
+    </button>
+    &nbsp;
+    <button class="btn btn-primary" ng-click="FacebookAlbumPhotos()"
+            ng-disabled="!loginStatus.connected">Get Album Photos
+    </button>
+  </div>
+  <br>
+
+  <div class="row">
+    <div class="col-md-6 pull-left">
+      <h1>Immagini Caricate</h1>
+      <div ng-repeat="UploadedPhoto in UploadedPhotos | limitTo:5" class="well well-lg">
+        <div ng-repeat="(key, value) in UploadedPhoto">
+          <p> {{key}}: {{ value }} </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 pull-right">
+      <h1>Immagini degli Album</h1>
+      <div ng-repeat="AlbumPhoto in AlbumPhotos | limitTo:1" class="well well-lg">
+        <div ng-repeat="(key, value) in AlbumPhotos">
+          <p> {{key}}: {{ value }} </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

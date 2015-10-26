@@ -1,0 +1,15 @@
+<div class="col-md-10 col-md-offset-1">
+    <br>
+    <div>
+        <button class="btn btn-primary" ng-click="getPixabayPhotos()">Pixabay Photos</button>&nbsp;
+        <input type="text" class="form-group" ng-model="pixabay.q">
+    </div>
+    <!-- SHOW INSTAGRAM PHOTOS -->
+    <div class="row">
+        <div ng-repeat="pic in pixabayPics | limitTo:5" class="well well-lg">
+            <div ng-repeat="(key, value) in pic">
+                <p> {{key}}: {{ value }} </p>
+            </div>
+        </div>
+    </div>
+</div>

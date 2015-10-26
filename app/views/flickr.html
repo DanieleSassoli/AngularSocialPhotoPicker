@@ -1,0 +1,17 @@
+<div class="col-md-10 col-md-offset-1">
+    <br>
+    <div>
+        <button class="btn btn-primary" ng-click="login()">Flickr Login</button>&nbsp;
+        <button class="btn btn-primary" ng-click="search()" ng-disabled="!loginStatus.connected">Flickr Photos</button>&nbsp;
+        <input type="text" class="form-group" ng-model="searchTerms.q">
+    </div>
+    <!-- SHOW INSTAGRAM PHOTOS -->
+    <div class="row">
+        <div ng-repeat="pic in flickrPics | limitTo:5" class="well well-lg">
+            <div ng-repeat="(key, value) in pic">
+                <p> {{key}}: {{ value }} </p>
+            </div>
+            <p> {{getPhotoUrl(pic)}}</p>
+        </div>
+    </div>
+</div>
