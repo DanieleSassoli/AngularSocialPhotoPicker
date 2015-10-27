@@ -3,15 +3,21 @@
  */
 angular.module('htdocsApp').factory('FlickrService', [function () {
   var flickrApp;
+  function getMe (cb){
+    flickrApp.api('/me').then(function (res) {
+      cb(res);
+    });
+  }
   return {
     login: function (cb) {
       hello('flickr').login().then(function () {
         flickrApp = hello('flickr');
-        cb(true);
+        getMe(cb);
       }, function (err) {
-        cb(false);
+        cb("error", err);
       });
     },
+    getme: getMe,
     getUploadedPhotos: function (cb) {
       flickrApp.api('/me/photos').then(function (res) {
         cb(res.data);

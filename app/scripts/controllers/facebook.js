@@ -16,7 +16,7 @@ angular.module('htdocsApp')
         $scope.FacebookLogin = function () {
             FacebookService.login(function (connected) {
                 $scope.$apply(function () {
-                    $scope.loginStatus.connected = connected;
+                    $scope.loginStatus.connected = connected != "error";
                 });
             });
         };

@@ -3,15 +3,21 @@
  */
 angular.module('htdocsApp').factory('FacebookService', [function () {
   var facebookApp;
+  function getMe (cb){
+    facebookApp.api('/me').then(function (res) {
+      cb(res);
+    });
+  }
   return {
     login: function (cb) {
       hello('facebook').login().then(function () {
         facebookApp = hello('facebook');
-        cb(true);
+        getMe(cb);
       }, function (err) {
-        cb(false);
+        cb("error", err);
       });
     },
+    getMe: getMe,
     getUploadedPhotos: function (cb) {
       facebookApp.api('/me/photos').then(function (res) {
         cb(res.data);

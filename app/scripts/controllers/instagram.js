@@ -7,9 +7,9 @@ angular.module('htdocsApp').controller('InstagramCtrl', ['$scope', 'InstagramSer
     $scope.loginStatus = {};
     $scope.loginStatus.connected = false;
     $scope.InstagramLogin = function () {
-        InstagramService.login(function (status) {
+        InstagramService.login(function (connected) {
             $scope.$apply(function () {
-                $scope.loginStatus.connected = status;
+                $scope.loginStatus.connected = connected != "error";;
             });
         });
     };

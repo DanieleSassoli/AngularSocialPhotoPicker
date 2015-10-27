@@ -5,9 +5,9 @@ angular.module('htdocsApp').controller('FlickrCtrl', ['$scope', 'FlickrService',
   $scope.flickrPics = [];
   $scope.flickrAlbumPics = [];
   $scope.login = function () {
-    FlickrService.login(function (data) {
+    FlickrService.login(function (connected) {
       $scope.$apply(function () {
-        $scope.loginStatus.connected = data;
+        $scope.loginStatus.connected = connected != "error";;
       });
     });
   };
@@ -17,11 +17,6 @@ angular.module('htdocsApp').controller('FlickrCtrl', ['$scope', 'FlickrService',
         $scope.$apply(function () {
           $scope.flickrPics.push(photo);
         });
-        /*FlickrService.getPhoto(item.id, function (data) {
-          $scope.$apply(function () {
-            $scope.flickrPics.push(data);
-          });
-        });*/
       });
     });
   };
@@ -33,11 +28,6 @@ angular.module('htdocsApp').controller('FlickrCtrl', ['$scope', 'FlickrService',
             $scope.$apply(function () {
               $scope.flickrAlbumPics.push(photo);
             });
-            /*FlickrService.getPhoto(photo.id, function (photoInfo) {
-              $scope.$apply(function () {
-                $scope.flickrAlbumPics.push(photoInfo.images[0]);
-              });
-            });*/
           });
         });
       });
