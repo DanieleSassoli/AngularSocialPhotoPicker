@@ -2,12 +2,9 @@
  * Created by Utente Amministrator on 26/10/2015.
  */
 angular.module('htdocsApp').factory("InstagramService", ['$rootScope', '$location', '$http', function ($rootScope, $location, $http) {
-  var instagaramApiBaseUrl = "https://api.instagram.com/v1/users/";
   var instagramApp;
-  var accessToken;
-
-  function executeRequest(url, cb) {
-    instagramApp.api(url).then(function(res){
+  function executeRequest(url, data, cb) {
+    instagramApp.api(url, data).then(function(res){
       cb("success", res.data);
     }, function(err){
       cb("error", err);
@@ -17,7 +14,6 @@ angular.module('htdocsApp').factory("InstagramService", ['$rootScope', '$locatio
   return {
     login: function (cb) {
       hello('instagram').login().then(function () {
-        //accessToken = instagram.access_token;
         instagramApp = hello('instagram');
         cb(true);
       }, function (err) {
@@ -25,13 +21,10 @@ angular.module('htdocsApp').factory("InstagramService", ['$rootScope', '$locatio
       });
     },
     getUserPhotos: function (userId, cb) {
-      executeRequest('me/photos', cb);
+      executeRequest('friend/photos', {id: userId}, cb);
     },
     getFriends: function (cb) {
-      executeRequest('me/following', cb);
-    },
-    getFriends: function (cb) {
-      executeRequest('me/', cb);
+      executeRequest('me/following', {}, cb);
     }
   };
 }]);
