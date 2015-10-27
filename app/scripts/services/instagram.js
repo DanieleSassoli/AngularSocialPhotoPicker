@@ -1,7 +1,7 @@
 /**
  * Created by Utente Amministrator on 26/10/2015.
  */
-angular.module('htdocsApp').factory("InstagramService", ['$rootScope', '$location', '$http', function ($rootScope, $location, $http) {
+angular.module('htdocsApp').factory("InstagramService", [function () {
   var instagramApp;
   function executeRequest(url, data, cb) {
     instagramApp.api(url, data).then(function(res){
