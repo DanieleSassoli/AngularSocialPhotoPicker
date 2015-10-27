@@ -7,7 +7,7 @@ angular.module('htdocsApp').factory("InstagramService", ['$rootScope', '$locatio
   var accessToken;
 
   function executeRequest(url, cb) {
-    instagramApp.get(url).then(function(res){
+    instagramApp.api(url).then(function(res){
       cb("success", res.data);
     }, function(err){
       cb("error", err);
@@ -16,21 +16,22 @@ angular.module('htdocsApp').factory("InstagramService", ['$rootScope', '$locatio
 
   return {
     login: function (cb) {
-      OAuth.popup('instagram').then(function (instagram) {
-        accessToken = instagram.access_token;
-        instagramApp = instagram;
+      hello('instagram').login().then(function () {
+        //accessToken = instagram.access_token;
+        instagramApp = hello('instagram');
         cb(true);
       }, function (err) {
         cb(false);
       });
     },
     getUserPhotos: function (userId, cb) {
-      var url = instagaramApiBaseUrl + userId + '/media/recent/?access_token=' + accessToken;
-      executeRequest(url, cb);
+      executeRequest('me/photos', cb);
     },
     getFriends: function (cb) {
-      var url = instagaramApiBaseUrl + 'self/follows/?access_token=' + accessToken;
-      executeRequest(url, cb);
+      executeRequest('me/following', cb);
+    },
+    getFriends: function (cb) {
+      executeRequest('me/', cb);
     }
   };
 }]);

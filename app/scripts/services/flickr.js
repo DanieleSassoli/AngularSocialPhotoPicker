@@ -5,12 +5,12 @@ angular.module('htdocsApp').factory('FlickrService', [function () {
     var FlickrApp, oauth_token, oauth_token_secret;
     return {
         login: function (cb) {
-            OAuth.popup('flickr').then(function (flickr) {
-                oauth_token = flickr.oauth_token;
-                oauth_token_secret = flickr.oauth_token_secret;
-                FlickrApp = flickr;
+          hello('flickr').login().then(function () {
+                //oauth_token = flickr.oauth_token;
+                //oauth_token_secret = flickr.oauth_token_secret;
+                FlickrApp = hello('flickr');
                 cb(true);
-            }).fail(function (err) {
+            }, function (err) {
                 cb(false);
             });
         },

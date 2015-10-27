@@ -25,7 +25,7 @@ angular.module('htdocsApp')
                 _.forEach(res, function (item) {
                     FacebookService.getPhoto(item.id, function (data) {
                         $scope.$apply(function () {
-                            $scope.UploadedPhotos.push(data);
+                            $scope.UploadedPhotos.push(data.images[0]);
                         });
                     });
                 });
@@ -39,7 +39,7 @@ angular.module('htdocsApp')
                         _.forEach(photos.data, function (photo) {
                             FacebookService.getPhoto(photo.id, function (photoInfo) {
                                 $scope.$apply(function () {
-                                    $scope.AlbumPhotos.push(photoInfo);
+                                    $scope.AlbumPhotos.push(photoInfo.images[0]);
                                 });
                             });
                         });

@@ -5,26 +5,26 @@ angular.module('htdocsApp').factory('FacebookService', [function () {
   var facebookApp;
   return {
     login: function (cb) {
-      OAuth.popup('facebook').then(function (facebook) {
-        facebookApp = facebook;
+      hello('facebook').login().then(function () {
+        facebookApp = hello('facebook');
         cb(true);
-      }).fail(function (err) {
+      }, function (err) {
         cb(false);
       });
     },
     getUploadedPhotos: function (cb) {
-      facebookApp.get('/me/photos').then(function (res) {
+      facebookApp.api('/me/photos').then(function (res) {
         cb(res.data);
       });
     },
     getAlbums: function (cb) {
-      facebookApp.get('/me/albums?fields=id,name').then(cb);
+      facebookApp.api('/me/albums?fields=id,name').then(cb);
     },
     getAlbumPhotos: function (albumId, cb) {
-      facebookApp.get('/' + albumId + '/photos').then(cb);
+      facebookApp.api('/me/album', {id: albumId}).then(cb);
     },
-    getPhoto: function (id, cb) {
-      facebookApp.get('/' + id + '?fields=id,album,images,height,width,picture').then(cb);
+    getPhoto: function (photoId, cb) {
+      facebookApp.api('/me/photo', {id:photoId, fields: 'id,album,images,height,width,picture'}).then(cb);
     }
   }
 }]);
