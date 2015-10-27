@@ -18,7 +18,7 @@ angular
     }, {
       scope: "photos",
       redirect_uri: '/redirect.html',
-      oauth_proxy: 'http://localhost/oauthproxy'
+      oauth_proxy: 'http://localhost:3000/oauthproxy'
     });
 
   }]);
