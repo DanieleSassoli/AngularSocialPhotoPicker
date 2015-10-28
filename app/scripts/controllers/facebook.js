@@ -14,33 +14,29 @@ angular.module('htdocsApp')
         $scope.UploadedPhotos = [];
         $scope.AlbumPhotos = [];
         $scope.FacebookLogin = function () {
-            FacebookService.login(function (connected) {
+            FacebookService.login(function (err, connected) {
                 $scope.$apply(function () {
-                    $scope.loginStatus.connected = connected != "error";
+                    $scope.loginStatus.connected = err == null;
                 });
             });
         };
         $scope.FacebookUploadedPhotos = function () {
-            FacebookService.getUploadedPhotos(function (res) {
-                _.forEach(res, function (item) {
-                    FacebookService.getPhoto(item.id, function (data) {
-                        $scope.$apply(function () {
-                            $scope.UploadedPhotos.push(data.images[0]);
-                        });
+            FacebookService.getUploadedPhotos(function (err, res) {
+                _.forEach(res, function (photo) {
+                    $scope.$apply(function () {
+                        $scope.UploadedPhotos.push(photo);
                     });
                 });
             });
         };
 
         $scope.FacebookAlbumPhotos = function () {
-            FacebookService.getAlbums(function (res) {
-                _.forEach(res.data, function (album) {
-                    FacebookService.getAlbumPhotos(album.id, function (photos) {
-                        _.forEach(photos.data, function (photo) {
-                            FacebookService.getPhoto(photo.id, function (photoInfo) {
-                                $scope.$apply(function () {
-                                    $scope.AlbumPhotos.push(photoInfo.images[0]);
-                                });
+            FacebookService.getAlbums(function (err, res) {
+                _.forEach(res, function (album) {
+                    FacebookService.getAlbumPhotos(album.id, function (err, photos) {
+                        _.forEach(photos, function (photo) {
+                            $scope.$apply(function () {
+                                $scope.AlbumPhotos.push(photo);
                             });
                         });
                     });

@@ -2,35 +2,67 @@
  * Created by Utente Amministrator on 26/10/2015.
  */
 angular.module('htdocsApp').factory('FacebookService', [function () {
-  var facebookApp;
-  function getMe (cb){
-    facebookApp.api('/me').then(function (res) {
-      cb(res);
-    });
-  }
-  return {
-    login: function (cb) {
-      hello('facebook').login().then(function () {
-        facebookApp = hello('facebook');
-        getMe(cb);
-      }, function (err) {
-        cb("error", err);
-      });
-    },
-    getMe: getMe,
-    getUploadedPhotos: function (cb) {
-      facebookApp.api('/me/photos').then(function (res) {
-        cb(res.data);
-      });
-    },
-    getAlbums: function (cb) {
-      facebookApp.api('/me/albums?fields=id,name').then(cb);
-    },
-    getAlbumPhotos: function (albumId, cb) {
-      facebookApp.api('/me/album', {id: albumId}).then(cb);
-    },
-    getPhoto: function (photoId, cb) {
-      facebookApp.api('/me/photo', {id:photoId, fields: 'id,album,images,height,width,picture'}).then(cb);
+    var facebookApp;
+
+    function getMe(cb) {
+        facebookApp.api('/me').then(function (res) {
+            cb(null, res);
+        }, function(err){cb(err);});
     }
-  }
+
+    function getPhoto(photoId, cb) {
+        facebookApp.api('/me/photo', {
+            id: photoId,
+            fields: 'id,album,images,height,width,picture'
+        }).then(function (res) {
+            cb(null, res.images[0])
+        }, function (err) {
+            cb(err);
+        });
+    }
+
+    function getPhotoForEachArrayElem(array, cb) {
+        async.map(array, function (photo, mapCb) {
+            getPhoto(photo.id, function (err, data) {
+                if (!err) photo.originalPhoto = data;
+                mapCb(err, photo);
+            });
+        }, function (err) {
+            cb(err, array);
+        });
+    }
+
+    return {
+        login: function (cb) {
+            hello('facebook').login().then(function () {
+                facebookApp = hello('facebook');
+                getMe(cb);
+            }, function (err) {
+                cb(err);
+            });
+        },
+        getUploadedPhotos: function (cb) {
+            facebookApp.api('/me/photos').then(function (res) {
+                getPhotoForEachArrayElem(res.data, cb);
+            }, function (err) {
+                cb(err);
+            });
+        },
+        getAlbums: function (cb) {
+            facebookApp.api('/me/albums', {'fields': 'id,name'}).then(function (res) {
+                cb(null, res.data);
+            }, function (err) {
+                cb(err);
+            });
+        },
+        getAlbumPhotos: function (albumId, cb) {
+            facebookApp.api('/me/album', {id: albumId}).then(function (res) {
+                getPhotoForEachArrayElem(res.data, cb);
+            }, function (err) {
+                cb(err);
+            });
+        },
+        getMe: getMe,
+        getPhoto: getPhoto
+    }
 }]);
