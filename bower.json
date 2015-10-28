@@ -10,7 +10,7 @@
     "DanieleSassoli <danielesassoli@gmail.com>"
   ],
   "description": "",
-  "main": "",
+  "main": "dist/build/SaxAngularHelloJs.min.js",
   "moduleType": [],
   "license": "MIT",
   "ignore": [
