@@ -17,6 +17,11 @@ angular.module('AngularHelloJs').factory("InstagramService", [function () {
                 getMe(cb);
             }, cb);
         },
+        logout: function (cb) {
+            instagramApp.logout().then(function () {
+                cb(null);
+            }, cb);
+        },
         getUserPhotos: function (userId, cb) {
             instagramApp.api('friend/photos', {id: userId}).then(function(res) {
                 async.map(res.data, function (item) {

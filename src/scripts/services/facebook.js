@@ -39,6 +39,11 @@ angular.module('AngularHelloJs').factory('FacebookService', [function () {
                 getMe(cb);
             }, cb);
         },
+        logout: function(cb){
+            facebookApp.logout().then(function(){
+                cb(null);
+            }, cb);
+        },
         getUploadedPhotos: function (cb) {
             facebookApp.api('/me/photos').then(function (res) {
                 getPhotoForEachArrayElem(res.data, cb);
