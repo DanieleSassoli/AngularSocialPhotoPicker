@@ -8,4 +8,4 @@
  *
  * Main module of the application.
  */
-angular.module('htdocsApp', ['AngularHelloJs']);
+angular.module('AngularHelloJsApp', ['AngularHelloJs']);

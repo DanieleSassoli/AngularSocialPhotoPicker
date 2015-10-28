@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the htdocsApp
  */
-angular.module('htdocsApp')
+angular.module('AngularHelloJsApp')
     .controller('FacebookCtrl', ['$scope', 'FacebookService', function ($scope, FacebookService) {
         $scope.loginStatus = {};
         $scope.loginStatus.connected = false;

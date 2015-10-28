@@ -1,4 +1,4 @@
-angular.module('htdocsApp').controller('FlickrCtrl', ['$scope', 'FlickrService', function ($scope, FlickrService) {
+angular.module('AngularHelloJsApp').controller('FlickrCtrl', ['$scope', 'FlickrService', function ($scope, FlickrService) {
   $scope.loginStatus = {};
   $scope.loginStatus.connected = false;
   $scope.searchTerms = {};
