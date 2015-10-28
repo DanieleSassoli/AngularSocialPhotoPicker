@@ -1,7 +1,7 @@
 /**
  * Created by Utente Amministrator on 26/10/2015.
  */
-angular.module('htdocsApp').factory('FacebookService', [function () {
+angular.module('AngularHelloJs').factory('FacebookService', [function () {
     var facebookApp;
 
     function getMe(cb) {

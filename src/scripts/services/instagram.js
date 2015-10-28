@@ -1,7 +1,7 @@
 /**
  * Created by Utente Amministrator on 26/10/2015.
  */
-angular.module('htdocsApp').factory("InstagramService", [function () {
+angular.module('AngularHelloJs').factory("InstagramService", [function () {
     var instagramApp;
 
     function getMe(cb) {
@@ -19,10 +19,11 @@ angular.module('htdocsApp').factory("InstagramService", [function () {
         },
         getUserPhotos: function (userId, cb) {
             instagramApp.api('friend/photos', {id: userId}).then(function(res) {
-                _.map(res.data, function (item) {
-                    item.originalPhoto = item.images.standard_resolution;
+                async.map(res.data, function (item) {
+                    return item.originalPhoto = item.images.standard_resolution;
+                },function(err){
+                    cb(err, res.data);
                 });
-                cb(null, res.data);
             }, cb);
         },
         getFriends: function (cb) {

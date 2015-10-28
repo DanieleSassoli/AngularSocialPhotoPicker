@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name htdocsApp
+ * @name AngularHelloJs
  * @description
- * # htdocsApp
+ * # AngularHelloJs
  *
  * Main module of the application.
  */
 angular
-  .module('htdocsApp', []).run(['$rootScope', function(){
+  .module('AngularHelloJs', []).run(['$rootScope', function(){
     //OAuth.initialize('CDG3XUKTSepWWOuoXntTVuyYZIg');hello.init({
     hello.init({
       facebook: '890340394389709',
@@ -20,5 +20,4 @@ angular
       redirect_uri: '/redirect.html',
       oauth_proxy: 'http://localhost:3000/oauthproxy'
     });
-
   }]);

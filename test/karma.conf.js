@@ -25,9 +25,11 @@ module.exports = function(config) {
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/bootstrap/dist/js/bootstrap.js',
+      'bower_components/hello/dist/hello.all.min.js',
+      'bower_components/async/lib/async.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      "app/scripts/**/*.js",
+      "../src/scripts/**/*.js",
       "test/mock/**/*.js",
       "test/spec/**/*.js"
     ],
