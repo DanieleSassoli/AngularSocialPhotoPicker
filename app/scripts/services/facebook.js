@@ -7,7 +7,7 @@ angular.module('htdocsApp').factory('FacebookService', [function () {
     function getMe(cb) {
         facebookApp.api('/me').then(function (res) {
             cb(null, res);
-        }, function(err){cb(err);});
+        }, cb);
     }
 
     function getPhoto(photoId, cb) {
@@ -37,30 +37,22 @@ angular.module('htdocsApp').factory('FacebookService', [function () {
             hello('facebook').login().then(function () {
                 facebookApp = hello('facebook');
                 getMe(cb);
-            }, function (err) {
-                cb(err);
-            });
+            }, cb);
         },
         getUploadedPhotos: function (cb) {
             facebookApp.api('/me/photos').then(function (res) {
                 getPhotoForEachArrayElem(res.data, cb);
-            }, function (err) {
-                cb(err);
-            });
+            }, cb);
         },
         getAlbums: function (cb) {
             facebookApp.api('/me/albums', {'fields': 'id,name'}).then(function (res) {
                 cb(null, res.data);
-            }, function (err) {
-                cb(err);
-            });
+            }, cb);
         },
         getAlbumPhotos: function (albumId, cb) {
             facebookApp.api('/me/album', {id: albumId}).then(function (res) {
                 getPhotoForEachArrayElem(res.data, cb);
-            }, function (err) {
-                cb(err);
-            });
+            }, cb);
         },
         getMe: getMe,
         getPhoto: getPhoto
