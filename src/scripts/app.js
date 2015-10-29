@@ -17,7 +17,6 @@ angular
       flickr: 'eb66863342454c0c97f9513cbe4c0d28'
     }, {
       scope: "photos",
-      redirect_uri: 'redirect.html',
-      oauth_proxy: 'http://localhost:3000/oauthproxy'
+      redirect_uri: 'redirect.html'
     });
   }]);

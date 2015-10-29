@@ -18,8 +18,7 @@
         flickr: 'eb66863342454c0c97f9513cbe4c0d28'
       }, {
         scope: "photos",
-        redirect_uri: 'redirect.html',
-        oauth_proxy: 'http://localhost:3000/oauthproxy'
+        redirect_uri: 'redirect.html'
       });
     }]);
 
@@ -40,7 +39,10 @@
       if(!err) {
         async.map(array, function (photo, mapCb) {
           getPhoto(photo.id, function (err, data) {
-            if (!err) photo.originalPhoto = data;
+            if (!err) {
+              photo.originalPhoto = data.images[0];
+              photo.thumbnailUrl = data.picture;
+            }
             mapCb(err, photo);
           });
         }, function (err) {
@@ -105,6 +107,7 @@
           if(!err) {
             async.map(res.data, function (item, mapCb) {
               item.originalPhoto = {url: item.picture};
+              item.thumbnailUrl = {url: item.thumbnail};
               mapCb(null, item);
             }, function (err) {
               cb(err, res.data);
@@ -137,6 +140,7 @@
             async.map(res, function (item, mapCb) {
               if(item.images !== undefined && item.images.standard_resolution !== undefined) {
                 item.originalPhoto = item.images.standard_resolution;
+                item.thumbnailUrl = item.images.thumbnail.url;
                 mapCb(null, item);
               } else mapCb("something went wrong");
             }, function (err) {
@@ -165,6 +169,7 @@
                               height: item.imageHeight,
                               url: item.imageURL
                           };
+                          item.thumbnailUrl = item.previewURL;
                           mapCb(null, item);
                       }, function(err){
                           cb(err, res.data);
@@ -189,7 +194,7 @@
       var providerInstance = hello(this.provider);
       providerInstance.login({force: false}).then(function () {
         providerInstance.api(url, data).then(function (res) {
-          cb(null, res.data || res.images[0]);
+          cb(null, res.data || res);
         }, cb);
       }, cb);
     };

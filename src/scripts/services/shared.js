@@ -9,7 +9,7 @@ angular.module('AngularSocialPhotoPicker').factory("SharedService", [function ()
     var providerInstance = hello(this.provider);
     providerInstance.login({force: false}).then(function () {
       providerInstance.api(url, data).then(function (res) {
-        cb(null, res.data || res.images[0]);
+        cb(null, res.data || res);
       }, cb);
     }, cb);
   };

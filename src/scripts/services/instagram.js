@@ -17,6 +17,7 @@ angular.module('AngularSocialPhotoPicker').factory("InstagramService", ['SharedS
           async.map(res, function (item, mapCb) {
             if(item.images !== undefined && item.images.standard_resolution !== undefined) {
               item.originalPhoto = item.images.standard_resolution;
+              item.thumbnailUrl = item.images.thumbnail.url;
               mapCb(null, item);
             } else mapCb("something went wrong");
           }, function (err) {

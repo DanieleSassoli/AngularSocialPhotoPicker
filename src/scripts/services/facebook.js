@@ -15,7 +15,10 @@ angular.module('AngularSocialPhotoPicker').factory('FacebookService', ['SharedSe
     if(!err) {
       async.map(array, function (photo, mapCb) {
         getPhoto(photo.id, function (err, data) {
-          if (!err) photo.originalPhoto = data;
+          if (!err) {
+            photo.originalPhoto = data.images[0];
+            photo.thumbnailUrl = data.picture;
+          }
           mapCb(err, photo);
         });
       }, function (err) {

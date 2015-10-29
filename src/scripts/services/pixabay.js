@@ -12,6 +12,7 @@ angular.module('AngularSocialPhotoPicker').factory('PixabayService', ['$http', f
                             height: item.imageHeight,
                             url: item.imageURL
                         };
+                        item.thumbnailUrl = item.previewURL;
                         mapCb(null, item);
                     }, function(err){
                         cb(err, res.data);

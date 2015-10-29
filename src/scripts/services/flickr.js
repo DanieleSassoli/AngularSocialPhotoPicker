@@ -30,6 +30,7 @@ angular.module('AngularSocialPhotoPicker').factory('FlickrService', ['SharedServ
         if(!err) {
           async.map(res.data, function (item, mapCb) {
             item.originalPhoto = {url: item.picture};
+            item.thumbnailUrl = {url: item.thumbnail};
             mapCb(null, item);
           }, function (err) {
             cb(err, res.data);
