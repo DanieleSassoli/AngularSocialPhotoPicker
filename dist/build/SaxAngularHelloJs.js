@@ -18,7 +18,7 @@
         flickr: 'eb66863342454c0c97f9513cbe4c0d28'
       }, {
         scope: "photos",
-        redirect_uri: 'redirect.html',
+        redirect_uri: '/redirect.html',
         oauth_proxy: 'http://localhost:3000/oauthproxy'
       });
     }]);
@@ -150,42 +150,42 @@
    * Created by Utente Amministrator on 26/10/2015.
    */
   module.factory("InstagramService", [function () {
-      var instagramApp;
 
-      function getMe(cb) {
-          instagramApp.api('/me').then(function (res) {
-              cb(null, res);
-          }, cb);
+    function executeRequest(url, data, cb) {
+      hello('instagram').login({force: false}).then(function () {
+        hello('instagram').api(url, data).then(function (res) {
+          cb(null, res.data);
+        }, cb);
+      }, cb);
+    }
+
+    return {
+      getMe: function (cb) {
+        executeRequest('/me', {}, cb);
+      },
+      logout: function (cb) {
+        hello('instagram').logout().then(function () {
+          cb(null);
+        }, cb);
+      },
+      getUserPhotos: function (userId, cb) {
+        executeRequest('/friend/photos', {id: userId}, function(err, res){
+          if(!err) {
+            async.map(res, function (item, mapCb) {
+              if(item.images !== undefined && item.images.standard_resolution !== undefined) {
+                item.originalPhoto = item.images.standard_resolution;
+                mapCb(null, item);
+              } else mapCb("something went wrong");
+            }, function (err) {
+              cb(err, res);
+            });
+          } else cb(err);
+        });
+      },
+      getFriends: function (cb) {
+        executeRequest('me/following', {}, cb);
       }
-
-      return {
-          login: function (cb) {
-              hello('instagram').login().then(function() {
-                  instagramApp = hello('instagram');
-                  getMe(cb);
-              }, cb);
-          },
-          logout: function (cb) {
-              instagramApp.logout().then(function () {
-                  cb(null);
-              }, cb);
-          },
-          getUserPhotos: function (userId, cb) {
-              instagramApp.api('friend/photos', {id: userId}).then(function(res) {
-                  async.map(res.data, function (item) {
-                      return item.originalPhoto = item.images.standard_resolution;
-                  },function(err){
-                      cb(err, res.data);
-                  });
-              }, cb);
-          },
-          getFriends: function (cb) {
-              instagramApp.api('me/following').then(function(res) {
-                  cb(null, res.data);
-              }, cb);
-          },
-          getMe: getMe
-      };
+    };
   }]);
 
   /**
