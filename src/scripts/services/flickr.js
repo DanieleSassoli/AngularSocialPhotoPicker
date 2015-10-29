@@ -1,28 +1,17 @@
 /**
  * Created by Utente Amministrator on 26/10/2015.
  */
-angular.module('AngularHelloJs').factory('FlickrService', [function () {
-  var flickrApp;
-
-  function executeRequest(url, data, cb) {
-    hello('flickr').login({force: false}).then(function () {
-      hello('flickr').api(url, data).then(function (res) {
-        cb(null, res.data);
-      }, cb);
-    }, cb);
-  }
-
+angular.module('AngularHelloJs').factory('FlickrService', ['SharedService', function (SharedService) {
+  var sharedService = new SharedService('flickr');
   return {
     getMe: function (cb) {
-      executeRequest('/me', {}, cb);
+      sharedService.executeRequest('/me', {}, cb);
     },
     logout: function (cb) {
-      flickrApp.logout().then(function () {
-        cb(null);
-      }, cb);
+      sharedService.logout(cb);
     },
     getUploadedPhotos: function (cb) {
-      executeRequest('/me/photos', {}, function(err, res){
+      sharedService.executeRequest('/me/photos', {}, function(err, res){
         if(!err) {
           async.map(res, function (item, mapCb) {
             item.originalPhoto = {url: item.picture};
@@ -34,10 +23,10 @@ angular.module('AngularHelloJs').factory('FlickrService', [function () {
       })
     },
     getAlbums: function (cb) {
-      executeRequest('/me/albums', {}, cb);
+      sharedService.executeRequest('/me/albums', {}, cb);
     },
     getAlbumPhotos: function (albumId, cb) {
-      executeRequest('/me/album', {id: albumId}, function(err, res){
+      sharedService.executeRequest('/me/album', {id: albumId}, function(err, res){
         if(!err) {
           async.map(res.data, function (item, mapCb) {
             item.originalPhoto = {url: item.picture};
@@ -49,7 +38,7 @@ angular.module('AngularHelloJs').factory('FlickrService', [function () {
       });
     },
     getPhoto: function (photoId, cb) {
-      executeRequest('/me/photo', {id: photoId}, cb);
+      sharedService.executeRequest('/me/photo', {id: photoId}, cb);
     }
   }
 }]);

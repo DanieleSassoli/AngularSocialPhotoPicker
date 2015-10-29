@@ -26,25 +26,14 @@
   /**
    * Created by Utente Amministrator on 26/10/2015.
    */
-  module.factory('FacebookService', [function () {
-
-    function executeRequest(url, data, cb) {
-      hello('facebook').login({force: false}).then(function () {
-        hello('facebook').api(url, data).then(function (res) {
-          cb(null, res.data);
-        }, cb);
-      }, cb);
-    }
+  module.factory('FacebookService', ['SharedService', function (SharedService) {
+    var sharedService = new SharedService('facebook');
 
     function getPhoto(photoId, cb) {
-      hello('facebook').api('/me/photo', {
+      sharedService.executeRequest('/me/photo', {
         id: photoId,
         fields: 'id,album,images,height,width,picture'
-      }).then(function (res) {
-        cb(null, res.images[0])
-      }, function (err) {
-        cb(err);
-      });
+      }, cb);
     }
 
     function getPhotoForEachArrayElem(err, array, cb) {
@@ -62,23 +51,21 @@
 
     return {
       getMe: function (cb) {
-        executeRequest('/me', {}, cb);
+        sharedService.executeRequest('/me', {}, cb);
       },
       logout: function (cb) {
-        hello('facebook').logout().then(function () {
-          cb(null);
-        }, cb);
+        sharedService.logout(cb);
       },
       getUploadedPhotos: function (cb) {
-        executeRequest('/me/photos', {}, function (err, res) {
+        sharedService.executeRequest('/me/photos', {}, function (err, res) {
           getPhotoForEachArrayElem(err, res, cb);
         });
       },
       getAlbums: function (cb) {
-        executeRequest('/me/albums', {'fields': 'id,name'}, cb);
+        sharedService.executeRequest('/me/albums', {'fields': 'id,name'}, cb);
       },
       getAlbumPhotos: function (albumId, cb) {
-        executeRequest('/me/album', {id: albumId}, function(err, res){
+        sharedService.executeRequest('/me/album', {id: albumId}, function(err, res){
           getPhotoForEachArrayElem(err, res, cb);
         });
       },
@@ -89,28 +76,17 @@
   /**
    * Created by Utente Amministrator on 26/10/2015.
    */
-  module.factory('FlickrService', [function () {
-    var flickrApp;
-
-    function executeRequest(url, data, cb) {
-      hello('flickr').login({force: false}).then(function () {
-        hello('flickr').api(url, data).then(function (res) {
-          cb(null, res.data);
-        }, cb);
-      }, cb);
-    }
-
+  module.factory('FlickrService', ['SharedService', function (SharedService) {
+    var sharedService = new SharedService('flickr');
     return {
       getMe: function (cb) {
-        executeRequest('/me', {}, cb);
+        sharedService.executeRequest('/me', {}, cb);
       },
       logout: function (cb) {
-        flickrApp.logout().then(function () {
-          cb(null);
-        }, cb);
+        sharedService.logout(cb);
       },
       getUploadedPhotos: function (cb) {
-        executeRequest('/me/photos', {}, function(err, res){
+        sharedService.executeRequest('/me/photos', {}, function(err, res){
           if(!err) {
             async.map(res, function (item, mapCb) {
               item.originalPhoto = {url: item.picture};
@@ -122,10 +98,10 @@
         })
       },
       getAlbums: function (cb) {
-        executeRequest('/me/albums', {}, cb);
+        sharedService.executeRequest('/me/albums', {}, cb);
       },
       getAlbumPhotos: function (albumId, cb) {
-        executeRequest('/me/album', {id: albumId}, function(err, res){
+        sharedService.executeRequest('/me/album', {id: albumId}, function(err, res){
           if(!err) {
             async.map(res.data, function (item, mapCb) {
               item.originalPhoto = {url: item.picture};
@@ -137,7 +113,7 @@
         });
       },
       getPhoto: function (photoId, cb) {
-        executeRequest('/me/photo', {id: photoId}, cb);
+        sharedService.executeRequest('/me/photo', {id: photoId}, cb);
       }
     }
   }]);
@@ -145,27 +121,18 @@
   /**
    * Created by Utente Amministrator on 26/10/2015.
    */
-  module.factory("InstagramService", [function () {
-
-    function executeRequest(url, data, cb) {
-      hello('instagram').login({force: false}).then(function () {
-        hello('instagram').api(url, data).then(function (res) {
-          cb(null, res.data);
-        }, cb);
-      }, cb);
-    }
+  module.factory("InstagramService", ['SharedService', function (SharedService) {
+    var sharedService = new SharedService('instagram');
 
     return {
       getMe: function (cb) {
-        executeRequest('/me', {}, cb);
+        sharedService.executeRequest('/me', {}, cb);
       },
       logout: function (cb) {
-        hello('instagram').logout().then(function () {
-          cb(null);
-        }, cb);
+        sharedService.logout(cb);
       },
       getUserPhotos: function (userId, cb) {
-        executeRequest('/friend/photos', {id: userId}, function(err, res){
+        sharedService.executeRequest('/friend/photos', {id: userId}, function(err, res){
           if(!err) {
             async.map(res, function (item, mapCb) {
               if(item.images !== undefined && item.images.standard_resolution !== undefined) {
@@ -179,7 +146,7 @@
         });
       },
       getFriends: function (cb) {
-        executeRequest('me/following', {}, cb);
+        sharedService.executeRequest('me/following', {}, cb);
       }
     };
   }]);
@@ -209,6 +176,29 @@
               );
           }
       }
+  }]);
+
+  /**
+   * Created by Utente Amministrator on 26/10/2015.
+   */
+  module.factory("SharedService", [function () {
+    var sharedServiceInstance = function(provider){
+      this.provider = provider;
+    };
+    sharedServiceInstance.prototype.executeRequest = function ( url, data, cb) {
+      var providerInstance = hello(this.provider);
+      providerInstance.login({force: false}).then(function () {
+        providerInstance.api(url, data).then(function (res) {
+          cb(null, res.data || res.images[0]);
+        }, cb);
+      }, cb);
+    };
+    sharedServiceInstance.prototype.logout = function(cb){
+      hello(this.provider).logout().then(function () {
+        cb(null);
+      }, cb);
+    };
+    return sharedServiceInstance;
   }]);
 
 
