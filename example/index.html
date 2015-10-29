@@ -1,90 +1,62 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-  </head>
-  <body ng-app="htdocsApp">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
+</head>
+<body ng-app="AngularHelloJsApp">
+<!-- Add your site or application content here -->
+<div class="header">
+    <div class="navbar navbar-default" role="navigation">
         <div class="container">
-          <h1>AngularJS Social Photo Module</h1>
+            <h1>AngularJS Social Photo Module</h1>
         </div>
-      </div>
     </div>
-    <ul class="nav nav-tabs col-md-10 col-md-offset-1" id="myTabs">
-      <li role="presentation" class="active"><a href="#facebook">Facebook</a></li>
-      <li role="presentation"><a href="#instagram">Instagram</a></li>
-      <li role="presentation"><a href="#pixabay">Pixabay</a></li>
-      <li role="presentation"><a href="#flickr">Flickr</a></li>
-    </ul>
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane fade in active" id="facebook">
+</div>
+<ul class="nav nav-tabs col-md-10 col-md-offset-1" id="myTabs">
+    <li role="presentation" class="active"><a href="#facebook">Facebook</a></li>
+    <li role="presentation"><a href="#instagram">Instagram</a></li>
+    <li role="presentation"><a href="#pixabay">Pixabay</a></li>
+    <li role="presentation"><a href="#flickr">Flickr</a></li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="facebook">
         <div ng-include="'views/facebook.html'" ng-controller="FacebookCtrl"></div>
-      </div>
-      <div role="tabpanel" class="tab-pane fade" id="instagram">
-        <div ng-include="'views/instagram.html'" ng-controller="InstagramCtrl"></div>
-      </div>
-      <div role="tabpanel" class="tab-pane fade" id="pixabay">
-        <div ng-include="'views/pixabay.html'" ng-controller="PixabayCtrl"></div>
-      </div>
-      <div role="tabpanel" class="tab-pane fade" id="flickr">
-        <div ng-include="'views/flickr.html'" ng-controller="FlickrCtrl"></div>
-      </div>
     </div>
+    <div role="tabpanel" class="tab-pane fade" id="instagram">
+        <div ng-include="'views/instagram.html'" ng-controller="InstagramCtrl"></div>
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="pixabay">
+        <div ng-include="'views/pixabay.html'" ng-controller="PixabayCtrl"></div>
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="flickr">
+        <div ng-include="'views/flickr.html'" ng-controller="FlickrCtrl"></div>
+    </div>
+</div>
 
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/hello/dist/hello.all.min.js"></script>
+<script src="bower_components/async/dist/async.min.js"></script>
+<script src="bower_components/lodash/lodash.min.js"></script>
+<!--<script src="bower_components/AngularHelloJs/dist/build/SaxAngularHelloJs.min.js"></script>-->
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+<script src="scripts/app.js"></script>
+<script src="../dist/build/SaxAngularHelloJs.js"></script>
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="bower_components/hello/dist/hello.all.min.js"></script>
-    <script src="bower_components/async/dist/async.min.js"></script>
-    <script src="bower_components/lodash/lodash.min.js"></script>
-
-    <script src="scripts/app.js"></script>
-
-    <script src="scripts/controllers/instagram.js"></script>
-    <script src="scripts/controllers/facebook.js"></script>
-    <script src="scripts/controllers/pixabay.js"></script>
-    <script src="scripts/controllers/flickr.js"></script>
-        <!-- endbuild -->
-    <script>
-      $('#myTabs a').click(function (e) {
+<script src="scripts/controllers/instagram.js"></script>
+<script src="scripts/controllers/facebook.js"></script>
+<script src="scripts/controllers/pixabay.js"></script>
+<script src="scripts/controllers/flickr.js"></script>
+<!-- endbuild -->
+<script>
+    $('#myTabs a').click(function (e) {
         e.preventDefault();
         $(this).tab('show')
-      })
-    </script>
+    })
+</script>
 </body>
 </html>

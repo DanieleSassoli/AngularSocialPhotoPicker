@@ -2,64 +2,61 @@
  * Created by Utente Amministrator on 26/10/2015.
  */
 angular.module('AngularHelloJs').factory('FacebookService', [function () {
-    var facebookApp;
 
-    function getMe(cb) {
-        facebookApp.api('/me').then(function (res) {
-            cb(null, res);
-        }, cb);
-    }
+  function executeRequest(url, data, cb) {
+    hello('facebook').login({force: false}).then(function () {
+      hello('facebook').api(url, data).then(function (res) {
+        cb(null, res.data);
+      }, cb);
+    }, cb);
+  }
 
-    function getPhoto(photoId, cb) {
-        facebookApp.api('/me/photo', {
-            id: photoId,
-            fields: 'id,album,images,height,width,picture'
-        }).then(function (res) {
-            cb(null, res.images[0])
-        }, function (err) {
-            cb(err);
+  function getPhoto(photoId, cb) {
+    hello('facebook').api('/me/photo', {
+      id: photoId,
+      fields: 'id,album,images,height,width,picture'
+    }).then(function (res) {
+      cb(null, res.images[0])
+    }, function (err) {
+      cb(err);
+    });
+  }
+
+  function getPhotoForEachArrayElem(err, array, cb) {
+    if(!err) {
+      async.map(array, function (photo, mapCb) {
+        getPhoto(photo.id, function (err, data) {
+          if (!err) photo.originalPhoto = data;
+          mapCb(err, photo);
         });
-    }
+      }, function (err) {
+        cb(err, array);
+      });
+    } else cb(err);
+  }
 
-    function getPhotoForEachArrayElem(array, cb) {
-        async.map(array, function (photo, mapCb) {
-            getPhoto(photo.id, function (err, data) {
-                if (!err) photo.originalPhoto = data;
-                mapCb(err, photo);
-            });
-        }, function (err) {
-            cb(err, array);
-        });
-    }
-
-    return {
-        login: function (cb) {
-            hello('facebook').login().then(function () {
-                facebookApp = hello('facebook');
-                getMe(cb);
-            }, cb);
-        },
-        logout: function(cb){
-            facebookApp.logout().then(function(){
-                cb(null);
-            }, cb);
-        },
-        getUploadedPhotos: function (cb) {
-            facebookApp.api('/me/photos').then(function (res) {
-                getPhotoForEachArrayElem(res.data, cb);
-            }, cb);
-        },
-        getAlbums: function (cb) {
-            facebookApp.api('/me/albums', {'fields': 'id,name'}).then(function (res) {
-                cb(null, res.data);
-            }, cb);
-        },
-        getAlbumPhotos: function (albumId, cb) {
-            facebookApp.api('/me/album', {id: albumId}).then(function (res) {
-                getPhotoForEachArrayElem(res.data, cb);
-            }, cb);
-        },
-        getMe: getMe,
-        getPhoto: getPhoto
-    }
+  return {
+    getMe: function (cb) {
+      executeRequest('/me', {}, cb);
+    },
+    logout: function (cb) {
+      hello('facebook').logout({force: false}).then(function () {
+        cb(null);
+      }, cb);
+    },
+    getUploadedPhotos: function (cb) {
+      executeRequest('/me/photos', {}, function (err, res) {
+        getPhotoForEachArrayElem(err, res, cb);
+      });
+    },
+    getAlbums: function (cb) {
+      executeRequest('/me/albums', {'fields': 'id,name'}, cb);
+    },
+    getAlbumPhotos: function (albumId, cb) {
+      executeRequest('/me/album', {id: albumId}, function(err, res){
+        getPhotoForEachArrayElem(err, res, cb);
+      });
+    },
+    getPhoto: getPhoto
+  }
 }]);

@@ -13,14 +13,6 @@ angular.module('AngularHelloJsApp')
         $scope.loginStatus.connected = false;
         $scope.UploadedPhotos = [];
         $scope.AlbumPhotos = [];
-        $scope.FacebookLogin = function () {
-            FacebookService.login(function (err, connected) {
-                $scope.$apply(function () {
-                    $scope.loginStatus.connected = err == null;
-                    $scope.loginStatus.me = connected;
-                });
-            });
-        };
         $scope.FacebookUploadedPhotos = function () {
             FacebookService.getUploadedPhotos(function (err, res) {
                 _.forEach(res, function (photo) {
