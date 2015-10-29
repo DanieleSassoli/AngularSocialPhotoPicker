@@ -13,7 +13,7 @@ angular.module('AngularHelloJsApp').controller('PixabayCtrl', ['$scope', 'Pixaba
     $scope.pixabay.q = "prova";
     $scope.getPixabayPhotos = function () {
         PixabayService.getPhotos($scope.pixabay.q, function (status, photos) {
-                $scope.pixabayPics = photos.data.hits;
+                $scope.pixabayPics = photos.hits;
         });
     };
 }]);

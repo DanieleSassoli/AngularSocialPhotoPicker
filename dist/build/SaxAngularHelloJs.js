@@ -196,13 +196,13 @@
           getPhotos: function (about, cb) {
               $http.get('https://pixabay.com/api/?username=alanmastro&key=7cc39f4a75777bba7af8&response_group=high_resolution&q=' + about + '&image_type=photo').then(
                   function (res) {
-                      async.map(res.data.hits, function(item){
+                      async.map(res.data.hits, function(item, mapCb){
                           item.originalPhoto = {
                               width: item.imageWidth,
                               height: item.imageHeight,
                               url: item.imageURL
                           };
-                          return item;
+                          mapCb(null, item);
                       }, function(err){
                           cb(err, res.data);
                       });
