@@ -1,7 +1,7 @@
 /**
  * Created by Utente Amministrator on 26/10/2015.
  */
-angular.module('AngularHelloJs').factory("SharedService", [function () {
+angular.module('AngularSocialPhotoPicker').factory("SharedService", [function () {
   var sharedServiceInstance = function(provider){
     this.provider = provider;
   };

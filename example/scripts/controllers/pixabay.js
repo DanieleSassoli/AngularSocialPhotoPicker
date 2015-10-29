@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the mytodo1App
  */
-angular.module('AngularHelloJsApp').controller('PixabayCtrl', ['$scope', 'PixabayService', function ($scope, PixabayService) {
+angular.module('AngularSocialPhotoPickerApp').controller('PixabayCtrl', ['$scope', 'PixabayService', function ($scope, PixabayService) {
     //<==== PIXABAY ====>
     $scope.pixabay = {};
     $scope.pixabay.q = "prova";

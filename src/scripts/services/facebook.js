@@ -1,7 +1,7 @@
 /**
  * Created by Utente Amministrator on 26/10/2015.
  */
-angular.module('AngularHelloJs').factory('FacebookService', ['SharedService', function (SharedService) {
+angular.module('AngularSocialPhotoPicker').factory('FacebookService', ['SharedService', function (SharedService) {
   var sharedService = new SharedService('facebook');
 
   function getPhoto(photoId, cb) {

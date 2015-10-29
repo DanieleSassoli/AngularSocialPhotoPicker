@@ -1,7 +1,7 @@
 /**
  * Created by Utente Amministrator on 26/10/2015.
  */
-angular.module('AngularHelloJsApp').controller('InstagramCtrl', ['$scope', 'InstagramService', function ($scope, InstagramService) {
+angular.module('AngularSocialPhotoPickerApp').controller('InstagramCtrl', ['$scope', 'InstagramService', function ($scope, InstagramService) {
     //<==== INSTAGRAM ====>
     $scope.pics = [];
     $scope.loginStatus = {};

@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name AngularHelloJs
+ * @name AngularSocialPhotoPicker
  * @description
- * # AngularHelloJs
+ * # AngularSocialPhotoPicker
  *
  * Main module of the application.
  */
 angular
-  .module('AngularHelloJs', []).run(['$rootScope', function(){
+  .module('AngularSocialPhotoPicker', []).run(['$rootScope', function(){
     //OAuth.initialize('CDG3XUKTSepWWOuoXntTVuyYZIg');hello.init({
     hello.init({
       facebook: '890340394389709',

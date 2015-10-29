@@ -8,4 +8,4 @@
  *
  * Main module of the application.
  */
-angular.module('AngularHelloJsApp', ['AngularHelloJs']);
+angular.module('AngularSocialPhotoPickerApp', ['AngularSocialPhotoPicker']);

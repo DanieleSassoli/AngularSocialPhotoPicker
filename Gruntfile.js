@@ -21,7 +21,7 @@ module.exports = function (grunt) {
 
   // Configurable paths for the application
   var appConfig = {
-    app: require('./example/bower.json').appPath || 'app',
+    app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
 
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     'angular-builder': {
       options: {
-        mainModule: 'AngularHelloJs',
+        mainModule: 'AngularSocialPhotoPicker',
         externalModules: 'ezfb',
         releaseBuild: {
           renameModuleRefs: true
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
       },
       app: {
         src: 'src/scripts/**/*.js',
-        dest: 'dist/build/SaxAngularHelloJs.js'
+        dest: 'dist/build/AngularSocialPhotoPicker.js'
       }
     },
     // Project settings
@@ -255,7 +255,7 @@ module.exports = function (grunt) {
     uglify: {
       custom: {
         files: {
-          'dist/build/SaxAngularHelloJs.min.js': ['dist/build/*.js']
+          'dist/build/AngularSocialPhotoPicker.min.js': ['dist/build/*.js']
         }
       },
       dist: {
@@ -312,7 +312,7 @@ module.exports = function (grunt) {
     ngtemplates: {
       dist: {
         options: {
-          module: 'AngularHelloJs',
+          module: 'AngularSocialPhotoPicker',
           htmlmin: '<%= htmlmin.dist.options %>',
           usemin: 'scripts/scripts.js'
         },

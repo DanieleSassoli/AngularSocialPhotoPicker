@@ -4,9 +4,9 @@
 
   /**
    * @ngdoc overview
-   * @name AngularHelloJs
+   * @name AngularSocialPhotoPicker
    * @description
-   * # AngularHelloJs
+   * # AngularSocialPhotoPicker
    *
    * Main module of the application.
    */
@@ -202,6 +202,6 @@
   }]);
 
 
-}) (angular.module ('AngularHelloJs', []));
+}) (angular.module ('AngularSocialPhotoPicker', []));
 
 

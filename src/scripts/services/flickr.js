@@ -1,7 +1,7 @@
 /**
  * Created by Utente Amministrator on 26/10/2015.
  */
-angular.module('AngularHelloJs').factory('FlickrService', ['SharedService', function (SharedService) {
+angular.module('AngularSocialPhotoPicker').factory('FlickrService', ['SharedService', function (SharedService) {
   var sharedService = new SharedService('flickr');
   return {
     getMe: function (cb) {
