@@ -6,14 +6,6 @@ angular.module('AngularHelloJsApp').controller('InstagramCtrl', ['$scope', 'Inst
     $scope.pics = [];
     $scope.loginStatus = {};
     $scope.loginStatus.connected = false;
-    $scope.InstagramLogin = function () {
-        InstagramService.login(function (err, connected) {
-            $scope.$apply(function () {
-                $scope.loginStatus.connected = err == null;
-                $scope.loginStatus.me = connected;
-            });
-        });
-    };
     $scope.InstagramPhotos = function () {
         InstagramService.getUserPhotos("self", function (status, pics) {
             $scope.$apply(function () {

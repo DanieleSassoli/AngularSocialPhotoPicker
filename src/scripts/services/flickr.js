@@ -2,58 +2,54 @@
  * Created by Utente Amministrator on 26/10/2015.
  */
 angular.module('AngularHelloJs').factory('FlickrService', [function () {
-    var flickrApp;
+  var flickrApp;
 
-    function getMe(cb) {
-        flickrApp.api('/me').then(function (res) {
-            cb(null, res);
-        }, cb);
-    }
+  function executeRequest(url, data, cb) {
+    hello('flickr').login({force: false}).then(function () {
+      hello('flickr').api(url, data).then(function (res) {
+        cb(null, res.data);
+      }, cb);
+    }, cb);
+  }
 
-    return {
-        login: function (cb) {
-            hello('flickr').login().then(function () {
-                flickrApp = hello('flickr');
-                getMe(cb);
-            }, function (err) {
-                cb("error", err);
-            });
-        },
-        logout: function (cb) {
-            flickrApp.logout().then(function () {
-                cb(null);
-            }, cb);
-        },
-        getUploadedPhotos: function (cb) {
-            flickrApp.api('/me/photos').then(function (res) {
-                async.map(res.data, function (item) {
-                    item.originalPhoto = {url: item.picture};
-                    return item;
-                }, function (err) {
-                    cb(err, res.data);
-                });
-            }, cb);
-        },
-        getAlbums: function (cb) {
-            flickrApp.api('/me/albums').then(function (res) {
-                cb(null, res.data);
-            }, cb);
-        },
-        getAlbumPhotos: function (albumId, cb) {
-            flickrApp.api('/me/album', {id: albumId}).then(function (res) {
-                async.map(res.data, function (item) {
-                    item.originalPhoto = {url: item.picture};
-                    return item;
-                }, function (err) {
-                    cb(err, res.data);
-                });
-            }, cb);
-        },
-        getPhoto: function (photoId, cb) {
-            flickrApp.api('/me/photo', {id: photoId}).then(function (res) {
-                cb(null, res);
-            }, cb);
-        },
-        getMe: getMe
+  return {
+    getMe: function (cb) {
+      executeRequest('/me', {}, cb);
+    },
+    logout: function (cb) {
+      flickrApp.logout().then(function () {
+        cb(null);
+      }, cb);
+    },
+    getUploadedPhotos: function (cb) {
+      executeRequest('/me/photos', {}, function(err, res){
+        if(!err) {
+          async.map(res, function (item, mapCb) {
+            item.originalPhoto = {url: item.picture};
+            mapCb(null, item);
+          }, function (err) {
+            cb(err, res);
+          });
+        } else cb(err);
+      })
+    },
+    getAlbums: function (cb) {
+      executeRequest('/me/albums', {}, cb);
+    },
+    getAlbumPhotos: function (albumId, cb) {
+      executeRequest('/me/album', {id: albumId}, function(err, res){
+        if(!err) {
+          async.map(res.data, function (item, mapCb) {
+            item.originalPhoto = {url: item.picture};
+            mapCb(null, item);
+          }, function (err) {
+            cb(err, res.data);
+          });
+        } else cb(err);
+      });
+    },
+    getPhoto: function (photoId, cb) {
+      executeRequest('/me/photo', {id: photoId}, cb);
     }
+  }
 }]);

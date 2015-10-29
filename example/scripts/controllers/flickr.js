@@ -4,14 +4,6 @@ angular.module('AngularHelloJsApp').controller('FlickrCtrl', ['$scope', 'FlickrS
   $scope.searchTerms = {};
   $scope.flickrPics = [];
   $scope.flickrAlbumPics = [];
-  $scope.login = function () {
-    FlickrService.login(function (err, connected) {
-      $scope.$apply(function () {
-        $scope.loginStatus.connected = err == null;
-        $scope.loginStatus.me = connected;
-      });
-    });
-  };
   $scope.getPhotos = function () {
     FlickrService.getUploadedPhotos(function (err, photos) {
       _.forEach(photos, function (photo) {

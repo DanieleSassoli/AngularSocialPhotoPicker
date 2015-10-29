@@ -40,7 +40,7 @@ angular.module('AngularHelloJs').factory('FacebookService', [function () {
       executeRequest('/me', {}, cb);
     },
     logout: function (cb) {
-      hello('facebook').logout({force: false}).then(function () {
+      hello('facebook').logout().then(function () {
         cb(null);
       }, cb);
     },
