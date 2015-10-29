@@ -22,9 +22,9 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
-      'bower_components/angular/angular.js',
-      'bower_components/hello/dist/hello.all.min.js',
-      'bower_components/async/lib/async.js',
+      '../example/bower_components/angular/angular.js',
+      '../example/bower_components/hello/dist/hello.all.min.js',
+      '../example/bower_components/async/lib/async.js',
       // endbower
       "../src/scripts/**/*.js",
       "test/mock/**/*.js",

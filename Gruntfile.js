@@ -46,8 +46,7 @@ module.exports = function (grunt) {
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
-        files: ['bower.json'],
-        tasks: ['wiredep']
+        files: ['bower.json']
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
@@ -152,7 +151,7 @@ module.exports = function (grunt) {
 
     // Empties folders to start fresh
     clean: {
-      custom: ["dist/build.*"],
+      custom: ["dist/build/*"],
       dist: {
         files: [{
           dot: true,
@@ -189,30 +188,6 @@ module.exports = function (grunt) {
           src: '{,*/}*.css',
           dest: '.tmp/styles/'
         }]
-      }
-    },
-
-    // Automatically inject Bower components into the app
-    wiredep: {
-      app: {
-        src: ['<%= yeoman.app %>/index.html'],
-        ignorePath: /\.\.\//
-      },
-      test: {
-        devDependencies: true,
-        src: '<%= karma.unit.configFile %>',
-        ignorePath: /\.\.\//,
-        fileTypes: {
-          js: {
-            block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-            detect: {
-              js: /'(.*\.js)'/gi
-            },
-            replace: {
-              js: '\'{{filePath}}\','
-            }
-          }
-        }
       }
     },
 
@@ -397,7 +372,7 @@ module.exports = function (grunt) {
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
-        dest: '.tmp/styles/',
+        dest: '<%= yeoman.app %>/.tmp/styles/',
         src: '{,*/}*.css'
       }
     },
@@ -434,7 +409,6 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-      'wiredep',
       'concurrent:server',
       'autoprefixer:server',
       'connect:livereload',
@@ -449,7 +423,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-    'wiredep',
     'concurrent:test',
     'autoprefixer',
     'connect:test',
@@ -458,7 +431,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'wiredep',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -483,5 +455,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-angular-builder');
 
-  grunt.registerTask('angular-builder', ['clean:custom', 'angular-builder', 'uglify:custom']);
+  grunt.registerTask('custom', ['clean:custom', 'angular-builder', 'uglify:custom']);
 };
