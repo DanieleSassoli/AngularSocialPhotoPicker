@@ -8,8 +8,7 @@
  *
  * Main module of the application.
  */
-angular
-  .module('AngularSocialPhotoPicker', []).run(['$rootScope', function(){
+angular.module('AngularSocialPhotoPicker', []);/*.run(['$rootScope', function(){
     //OAuth.initialize('CDG3XUKTSepWWOuoXntTVuyYZIg');hello.init({
     hello.init({
       facebook: '890340394389709',
@@ -19,4 +18,4 @@ angular
       scope: "photos",
       redirect_uri: 'redirect.html'
     });
-  }]);
+  }]);*/
