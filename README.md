@@ -16,11 +16,25 @@ and Pixabay for the moment beeing...). It's based on [HelloJs] (https://adodson.
  
 ``` <script src="/path/to/dist/build/AngularSocialPhotoPicker.js"></script> ```
  
- then inject it into your main module
+ Then inject it into your main module
  
 ``` angular.module('yourModule', ['AngularSocialPhotoPicker']); ```
+
+  Then you will need to configure the client_id for each social you intend to use. You can do this when configuring your module
+  in app.js
+  
+  ```
+  angular.module('AngularSocialPhotoPickerApp', ['AngularSocialPhotoPicker']).config(['socialPhotoPickerProvider', function(socialPhotoPickerProvider){
+    socialPhotoPickerProvider.initSocials({
+      facebooId: 'YOUR_FACEBOOK_CLIENT_ID',
+      instagramId: 'YOUR_INSTAGRAM_CLIENT_ID',
+      flickId: 'YOUR_FLICKR_CLIENT_ID'
+    });
+  }]);
+  ```
+To configure your client ids please refer to [HelloJs] (https://adodson.com/hello.js/) documentation.
  
- Now you can use the service provided, which are: 
+Now you can use the service provided, which are: 
  
  * FacebookService
  * InstagramService
