@@ -30,7 +30,6 @@ module.exports = function (grunt) {
     'angular-builder': {
       options: {
         mainModule: 'AngularSocialPhotoPicker',
-        externalModules: 'ezfb',
         releaseBuild: {
           renameModuleRefs: true
         }
