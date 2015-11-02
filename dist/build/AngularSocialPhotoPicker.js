@@ -10,17 +10,6 @@
    *
    * Main module of the application.
    */
-  /*.run(['$rootScope', function(){
-      //OAuth.initialize('CDG3XUKTSepWWOuoXntTVuyYZIg');hello.init({
-      hello.init({
-        facebook: '890340394389709',
-        instagram: '97d172d17b3240abb0fbe18280fcf9a5',
-        flickr: 'eb66863342454c0c97f9513cbe4c0d28'
-      }, {
-        scope: "photos",
-        redirect_uri: 'redirect.html'
-      });
-    }]);*/
 
   /**
    * Created by Utente Amministrator on 26/10/2015.
@@ -185,14 +174,15 @@
 
   module
     .provider('socialPhotoPicker', function socialPhotoPickerProvider() {
-      this.initSocials = function (ids) {
+      this.initSocials = function (config) {
         hello.init({
-          facebook: ids.facebookId,
-          instagram: ids.instagramId,
-          flickr: ids.flickrId
+          facebook: config.clientIds.facebookId || '',
+          instagram: config.clientIds.instagramId  || '',
+          flickr: config.clientIds.flickrId  || ''
         }, {
-          scope: "photos",
-          redirect_uri: 'redirect.html'
+          scope: config.scope || 'photos',
+          redirect_uri: config.redirectUri || 'redirect.html',
+          oauth_proxy: config.oauthProxy || 'https://auth-server.herokuapp.com/proxy'
         });
       };
       this.$get = ["SocialPhotoPicker", function socialPhotoPickerFactory(SocialPhotoPicker) {

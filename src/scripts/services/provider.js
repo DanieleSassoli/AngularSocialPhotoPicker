@@ -1,13 +1,14 @@
 angular.module('AngularSocialPhotoPicker')
   .provider('socialPhotoPicker', function socialPhotoPickerProvider() {
-    this.initSocials = function (ids) {
+    this.initSocials = function (config) {
       hello.init({
-        facebook: ids.facebookId,
-        instagram: ids.instagramId,
-        flickr: ids.flickrId
+        facebook: config.clientIds.facebookId || '',
+        instagram: config.clientIds.instagramId  || '',
+        flickr: config.clientIds.flickrId  || ''
       }, {
-        scope: "photos",
-        redirect_uri: 'redirect.html'
+        scope: config.scope || 'photos',
+        redirect_uri: config.redirectUri || 'redirect.html',
+        oauth_proxy: config.oauthProxy || 'https://auth-server.herokuapp.com/proxy'
       });
     };
     this.$get = ["SocialPhotoPicker", function socialPhotoPickerFactory(SocialPhotoPicker) {
