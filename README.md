@@ -26,13 +26,13 @@ and Pixabay for the moment beeing...). It's based on [HelloJs] (https://adodson.
   ```
   angular.module('AngularSocialPhotoPickerApp', ['AngularSocialPhotoPicker']).config(['socialPhotoPickerProvider', function(socialPhotoPickerProvider){
     socialPhotoPickerProvider.initSocials({clientIds: {
-        facebooId: '890340394389709',
-        instagramId: '97d172d17b3240abb0fbe18280fcf9a5',
-        flickId: 'eb66863342454c0c97f9513cbe4c0d28'
+        facebooId: 'YOUR_FACEBOOK_CLIENT_ID',
+        instagramId: 'YOUR_INSTAGRAM_CLIENT_ID',
+        flickId: 'YOU_FLICKR_CLIENT_ID'
       },
-        scope: 'photos',
-        redirectUri: 'redirect.html',
-        oauthProxy: 'http://localhost:8088/pushApplicationCredential'
+        scope: 'requiredScopes', //default will be 'photos',
+        redirectUri: 'yourHtmlRedirectPage', // default will be'redirect.html',
+        oauthProxy: 'yourUrl' //default will be https://auth-server.herokuapp.com/proxy
       });
   }]);
   ```
