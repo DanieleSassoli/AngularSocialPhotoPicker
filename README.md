@@ -25,11 +25,15 @@ and Pixabay for the moment beeing...). It's based on [HelloJs] (https://adodson.
   
   ```
   angular.module('AngularSocialPhotoPickerApp', ['AngularSocialPhotoPicker']).config(['socialPhotoPickerProvider', function(socialPhotoPickerProvider){
-    socialPhotoPickerProvider.initSocials({
-      facebooId: 'YOUR_FACEBOOK_CLIENT_ID',
-      instagramId: 'YOUR_INSTAGRAM_CLIENT_ID',
-      flickId: 'YOUR_FLICKR_CLIENT_ID'
-    });
+    socialPhotoPickerProvider.initSocials({clientIds: {
+        facebooId: '890340394389709',
+        instagramId: '97d172d17b3240abb0fbe18280fcf9a5',
+        flickId: 'eb66863342454c0c97f9513cbe4c0d28'
+      },
+        scope: 'photos',
+        redirectUri: 'redirect.html',
+        oauthProxy: 'http://localhost:8088/pushApplicationCredential'
+      });
   }]);
   ```
 To configure your client ids please refer to [HelloJs] (https://adodson.com/hello.js/) documentation.
